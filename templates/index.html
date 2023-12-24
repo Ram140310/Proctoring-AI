@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Execute Scripts</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Execute Scripts</h1>
+    <button id="executePersonPhone">Execute Person and Phone</button>
+    <!-- Create similar buttons for other scripts -->
+    <div id="output"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#executePersonPhone').click(function() {
+                executeScript('person_and_phone');
+            });
+            // Create similar click events for other buttons to execute 
+other scripts
+            
+            function executeScript(fileName) {
+                $.ajax({
+                    url: '/execute/' + fileName,
+                    type: 'GET',
+                    success: function(response) {
+                        $('#output').append('<p>' + response.status + ': ' 
++ response.message + '</p>');
+                        if (response.output) {
+                            $('#output').append('<p>Output: <pre>' + 
+response.output + '</pre></p>');
+                        }
+                    },
+                    error: function(error) {
+                        $('#output').append('<p>Error: ' + 
+error.responseText + '</p>');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
